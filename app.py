@@ -46,5 +46,10 @@ def predict_litter_route():
 
     return jsonify(result)
 
+# ✅ Add this health check route for Render to monitor the app
+@app.route("/healthz")
+def health_check():
+    return "OK", 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
