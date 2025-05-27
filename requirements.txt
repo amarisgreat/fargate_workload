@@ -1,6 +1,8 @@
 flask
 flask-cors
 torch
-torchvision>
+torchvision
 efficientnet_pytorch
-Pillow
+pillow
+gunicorn
+
