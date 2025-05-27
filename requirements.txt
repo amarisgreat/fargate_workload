@@ -5,4 +5,4 @@ torchvision
 efficientnet_pytorch
 pillow
 gunicorn
-
+opencv-python-headless
