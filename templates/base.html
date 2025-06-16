@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fargate Benchmark App{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+
+    <!-- Dark Mode Toggle Switch -->
+    <div class="switch">
+        <label>
+            <input type="checkbox" onclick="toggleDarkMode()" id="darkToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container fade">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Dark Mode Script -->
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            const isDark = document.body.classList.contains("dark-mode");
+            localStorage.setItem("darkMode", isDark);
+            document.getElementById("darkToggle").checked = isDark;
+        }
+
+        // On page load: apply saved theme and set toggle state
+        window.onload = () => {
+            const darkEnabled = localStorage.getItem("darkMode") === "true";
+            if (darkEnabled) {
+                document.body.classList.add("dark-mode");
+            }
+            document.getElementById("darkToggle").checked = darkEnabled;
+        };
+    </script>
+
+</body>
+</html>
