@@ -1,8 +1,0 @@
-flask
-flask-cors
-torch
-torchvision
-efficientnet_pytorch
-pillow
-gunicorn
-opencv-python-headless
