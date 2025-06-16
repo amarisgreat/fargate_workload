@@ -39,3 +39,5 @@ def predict(image_bytes):
         "probability": round(confidence * 100, 2),
         "all_probabilities": {label_mapping[i]: round(probabilities[i].item() * 100, 2) for i in range(len(label_mapping))}
     }
+
+    

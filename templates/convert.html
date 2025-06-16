@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Image Conversion PDD{% endblock %}
+
+{% block content %}
+<h1>Image Conversion</h1>
+
+<div id="loading" class="spinner"></div>
+
+<div id="result" style="display:none;">
+    <p><strong>Image has been successfully converted to grayscale.</strong></p>
+
+    <h2>Performance</h2>
+    <p>CPU Time: <strong>{{ cpu_time }}</strong> seconds</p>
+    <p>Computation Time: <strong>{{ wall_time }}</strong> seconds</p>
+
+    <a href="/">Back to Home</a>
+</div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("result").style.display = "block";
+    }, 300);
+</script>
+{% endblock %}
