@@ -1,20 +1,20 @@
 import io
+
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
 
-# Load the model (CPU only)
 model = torch.jit.load("model/pose_classifier_model_conv.pt", map_location=torch.device("cpu"))
 model.eval()
 
-# Label mapping
+
 label_mapping = {
     2: "Droopy Necks",
     1: "Healthy",
     0: "Slipped Tendon"
 }
 
-# Image preprocessing function
+
 def transform_image(image_bytes):
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -23,7 +23,6 @@ def transform_image(image_bytes):
     image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
     return transform(image).unsqueeze(0).to(torch.device("cpu"))
 
-# Prediction function
 def predict(image_bytes):
     input_tensor = transform_image(image_bytes)
 

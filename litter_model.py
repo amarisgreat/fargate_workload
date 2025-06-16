@@ -6,27 +6,25 @@ from efficientnet_pytorch import EfficientNet
 from PIL import Image
 from torchvision import transforms
 
-# Use CPU for compatibility on hosting platforms
 device = torch.device('cpu')
 
-# Dynamically resolve the path to the model file
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, 'model', 'litter_classifier_model.pth')
 
-# Load model architecture and weights
 num_classes = 4
 model = EfficientNet.from_name('efficientnet-b3')
 model._fc = nn.Linear(model._fc.in_features, num_classes)
 
-# Load weights to model
+
 model.load_state_dict(torch.load(model_path, map_location=device))
 model.to(device)
 model.eval()
 
-# Class labels
+
 class_labels = ["Healthy", "Coccidiosis", "Salmonella", "Newcastle"]
 
-# Image preprocessing
+
 def transform_image(image_bytes):
     transform = transforms.Compose([
         transforms.Resize((300, 300)),
@@ -37,7 +35,6 @@ def transform_image(image_bytes):
     image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
     return transform(image).unsqueeze(0).to(device)
 
-# Predict litter class
 def predict_litter(image_bytes):
     input_tensor = transform_image(image_bytes)
     with torch.no_grad():
