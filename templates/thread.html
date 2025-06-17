@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Benchmark Results{% endblock %}
+
+{% block content %}
+<h1>System Benchmark</h1>
+
+<div id="loading" class="spinner"></div>
+
+<div id="result" style="display:none;">
+    <p><strong>Benchmarking complete.</strong></p>
+
+    <h2>Performance Metrics</h2>
+    <p>CPU Task Time: <strong>{{ cpu_time }}</strong> seconds</p>
+    <p>I/O Task Time: <strong>{{ io_time }}</strong> seconds</p>
+    <p>Memory Usage: <strong>{{ mem_usage }}</strong>%</p>
+
+    <a href="/">Back to Home</a>
+</div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("result").style.display = "block";
+    }, 300);
+</script>
+{% endblock %}

@@ -1,5 +1,8 @@
 import os
 import time
+import threading
+import math
+import psutil
 
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
@@ -122,6 +125,41 @@ def debug():
         "model_image2": os.path.exits("images/image2.jpg"),
     }
     return jsonify(info)
+
+@app.route("/thread")
+def benchmark():
+    def cpu_heavy_task():
+        for _ in range(100000):
+            math.factorial(500)
+
+    def io_heavy_task():
+        for _ in range(10000):
+            _ = [i for i in range(1000)]
+
+    cpu_start = time.time()
+
+    threads = []
+    for _ in range(4):  # Simulate CPU stress
+        t = threading.Thread(target=cpu_heavy_task)
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    io_start = time.time()
+    io_heavy_task()
+    io_end = time.time()
+
+    cpu_end = time.time()
+    mem_usage = psutil.virtual_memory().percent
+
+    return render_template(
+        "thread.html",
+        cpu_time=round(cpu_end - cpu_start, 2),
+        io_time=round(io_end - io_start, 2),
+        mem_usage=mem_usage
+    )
 
 
 @app.route("/healthz")
