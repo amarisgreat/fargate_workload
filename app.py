@@ -110,6 +110,20 @@ def convert_image():
     except Exception as e:
         return render_template("error.html", error=f"Image conversion failed: {str(e)}"), 500
 
+@app.route("/debug")
+def debug():
+    info = {
+        "cwd": os.getcwd(),
+        "input_exists": os.path.exists("images/image.jpg"),
+        "output_exists": os.path.exists("images/output.jpg"),
+        "convert_template": os.path.exists("templates/convert.html"),
+        "error_template": os.path.exists("templates/error.html"),
+        "model_image1": os.path.exits("images/image1.jpg"),
+        "model_image2": os.path.exits("images/image2.jpg"),
+    }
+    return jsonify(info)
+
+
 @app.route("/healthz")
 def health_check():
     return "OK", 200
