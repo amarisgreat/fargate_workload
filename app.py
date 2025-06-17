@@ -32,23 +32,7 @@ def cpu_task():
     duration = round(time.time() - start, 4)
     return render_template('fib.html', result=result, duration=duration)
 
-@app.route("/convert", methods=["GET"])
-def convert_image():
-    INPUT_PATH = "image.jpg"
-    OUTPUT_PATH = "output.jpg"
-    if not os.path.exists(INPUT_PATH):
-        return {"error": "image.jpg not found"}, 404
 
-    if os.path.exists(OUTPUT_PATH):
-        os.remove(OUTPUT_PATH)
-
-    image = Image.open(INPUT_PATH).convert("L")
-    image.save(OUTPUT_PATH)
-
-    from flask import jsonify
-    return jsonify({"message": "Image converted to grayscale and saved as output.jpg"}), 200
-
-import os
 
 
 @app.route("/predict", methods=["GET"])
@@ -81,6 +65,8 @@ def predict_combined():
 
         cpu_duration = round(time.process_time() - cpu_start, 4)
         wall_duration = round(time.time() - wall_start, 4)
+
+        
 
         return render_template("predict.html",
                                pose=pose_result,
