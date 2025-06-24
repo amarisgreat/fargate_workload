@@ -16,6 +16,8 @@ CORS(app)
 
 THRESHOLD = 60.0
 
+startup_time_program = time.time()
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -160,12 +162,21 @@ def benchmark():
         io_time=round(io_end - io_start, 2),
         mem_usage=mem_usage
     )
+@app.route("/startup")
+def startup():
+    print("Startup endpoint called")
+    return jsonify({
+        "status": "OK",
+        "message": "Application started successfully",
+        "startup_time through": startup_end_program,
 
+    })
 
 @app.route("/healthz")
 def health_check():
     return "OK", 200
 
+startup_end_program = round(time.time() - startup_time_program, 4)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
