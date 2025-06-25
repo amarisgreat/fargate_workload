@@ -19,8 +19,6 @@ RUN pip install --upgrade pip && \
 
 COPY . .
 
-COPY images/image1.jpg images/image1.jpg
-COPY images/image2.jpg images/image2.jpg
 
 
 RUN mkdir -p static images && \
