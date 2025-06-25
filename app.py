@@ -32,7 +32,7 @@ def cpu_task():
     def fib(n):
         return fib(n - 1) + fib(n - 2) if n > 1 else n
     start = time.time()
-    result = fib(50)
+    result = fib(30)
     duration = round(time.time() - start, 4)
     return render_template('fib.html', result=result, duration=duration)
 
@@ -70,42 +70,6 @@ def convert_image():
                                wall_time=wall_duration)
     except Exception as e:
         return render_template("error.html", error=f"Image conversion failed: {str(e)}"), 500
-
-
-@app.route("/thread")
-def benchmark():
-    def cpu_heavy_task():
-        for _ in range(100000):
-            math.factorial(500)
-
-    def io_heavy_task():
-        for _ in range(10000):
-            _ = [i for i in range(1000)]
-
-    cpu_start = time.time()
-
-    threads = []
-    for _ in range(4):
-        t = threading.Thread(target=cpu_heavy_task)
-        threads.append(t)
-        t.start()
-
-    for t in threads:
-        t.join()
-
-    io_start = time.time()
-    io_heavy_task()
-    io_end = time.time()
-
-    cpu_end = time.time()
-    mem_usage = psutil.virtual_memory().percent
-
-    return render_template(
-        "thread.html",
-        cpu_time=round(cpu_end - cpu_start, 2),
-        io_time=round(io_end - io_start, 2),
-        mem_usage=mem_usage
-    )
 
 
 @app.route("/health")
