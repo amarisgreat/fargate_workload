@@ -37,4 +37,5 @@ EXPOSE 5000
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+#CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "-w", "7", "--threads", "2", "--timeout", "180", "-b", "0.0.0.0:5000", "app:app"]

@@ -1,9 +1,6 @@
-import math
 import os
-import threading
 import time
 
-import psutil
 from flask import Flask, render_template
 from flask_cors import CORS
 from PIL import Image
